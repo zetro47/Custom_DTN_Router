@@ -1,0 +1,72 @@
+
+Scenario.name = LunarScenarioEpidemicSmallBuffer
+Scenario.simulateConnections = true
+Scenario.updateInterval = 1
+Scenario.endTime = 1812410
+Scenario.nrofHostGroups = 3
+
+# Define the simulation area
+MovementModel.worldSize = 1174704, 1326613
+MovementModel.rngSeed = 1
+MovementModel.warmup = 10
+
+# Communication Technology
+wlan.type = SimpleBroadcastInterface
+wlan.transmitSpeed = 10M
+wlan.transmitRange = 70000
+
+# Group for moon rovers
+Group1.groupID = a
+Group1.nrofHosts = 100
+Group1.router = EpidemicRouter
+Group1.bufferSize = 50M
+Group1.movementModel = ExternalMovement
+ExternalMovement.file = /Users/zetro7744/Documents/customtrace.txt
+Group1.waitTime = 0, 120
+Group1.speed = 1, 1
+Group1.range = 250
+Group1.nrofInterfaces = 1
+Group1.interface1 = wlan
+
+# Group for moon orbiters
+Group2.groupID = b
+Group2.nrofHosts = 50
+Group2.router = EpidemicRouter
+Group2.bufferSize = 50M
+Group2.movementModel = ExternalMovement
+ExternalMovement.file = /Users/zetro7744/Documents/customtrace.txt
+Group2.waitTime = 0, 120
+Group2.speed = 1, 1
+Group2.range = 250
+Group2.nrofInterfaces = 1
+Group2.interface1 = wlan
+
+# Group for earth ground station
+Group3.groupID = c
+Group3.nrofHosts = 1
+Group3.router = EpidemicRouter
+Group3.bufferSize = 50M
+Group3.movementModel = StationaryMovement
+Group3.waitTime = 0, 120
+Group3.speed = 1, 1
+Group3.range = 2500
+Group3.nodeLocation = 537352, 150000
+Group3.nrofInterfaces = 1
+Group3.interface1 = wlan
+
+
+# Event generator for creating messages
+Events.nrof = 1
+Events1.class = MessageEventGenerator
+Events1.interval = 5000,10000
+Events1.size = 500k,1M
+Events1.hosts = 99,102
+Events1.tohosts = 150,151
+Events1.prefix = M
+
+Report.nrofReports = 2
+Report.warmup = 0
+Report.reportDir = reports/
+Report.report1 = DeliveredMessagesReport
+Report.report2 = MessageStatsReport
+Report.granularity = 25
